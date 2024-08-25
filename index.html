@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <style>
+        canvas { border: 1px solid black; }
+        #controls { margin-top: 10px; }
+        #cheatsButtons { display: none; }
+        #cheatsMessage { display: none; color: red; }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <div id="controls">
+        <button id="startButton">Start</button>
+        <button id="pauseButton">Pause</button>
+        <button id="increaseSpeed">Increase Speed</button>
+        <button id="increaseSize">Increase Size</button>
+        <button id="increaseXP">Increase XP Gain</button>
+        <button id="cheatsButton">Cheats</button>
+        <div id="cheatsButtons">
+            <button id="noLosing">No Losing</button>
+            <button id="infiniteStatPoints">Infinite Stat Points</button>
+            <button id="doubleScore">Double Score</button>
+            <button id="disableAllCheatsButton">Disable All Cheats</button>
+        </div>
+        <div id="cheatsMessage">Using Cheats</div>
+    </div>
+    <div>
+        <p id="score">Score: 0</p>
+        <p id="xp">XP: 0 / 10</p>
+        <p id="level">Level: 1</p>
+        <p id="statPoints">Stat Points: 0</p>
+    </div>
+    <audio id="foodSound" src="foodsound.mp3"></audio>
+    <script src="snake.js"></script>
+</body>
+</html>
