@@ -177,103 +177,107 @@ function draw() {
 }
 
 function checkCollision() {
-    const head = snake[0];
-
-    if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
-        return !noLosing;
-    }
-
     for (let i = 1; i < snake.length; i++) {
-        if (head.x === snake[i].x && head.y === snake[i].y) {
+        if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
             return true;
         }
     }
 
-    return false;
-}
-
-function togglePause() {
-    if (isPaused) {
-        intervalId = setInterval(update, speed);
-        pauseButton.textContent = 'Pause';
-    } else {
-        clearInterval(intervalId);
-        pauseButton.textContent = 'Resume';
+    if (snake[0].x < 0 || snake[0].x >= canvas.width || snake[0].y < 0 || snake[0].y >= canvas.height) {
+        return true;
     }
-    isPaused = !isPaused;
+
+    return false;
 }
 
 function updateLevel() {
     if (xp >= xpRequired) {
         level++;
         xp -= xpRequired;
-        xpRequired *= 2;
-        statPoints += infiniteStatPoints ? 0 : 1;
+        xpRequired = Math.floor(xpRequired * 1.5);
         levelDisplay.textContent = `Level: ${level}`;
-        xpDisplay.textContent = `XP: ${xp} / ${xpRequired}`;
-        statPointsDisplay.textContent = `Stat Points: ${statPoints}`;
-        if (speed > 50) {
-            speed -= 10;
-            clearInterval(intervalId);
-            intervalId = setInterval(update, speed);
-        }
     }
 }
 
 function increaseSpeed() {
-    if (statPoints > 0 || infiniteStatPoints) {
-        statPoints = infiniteStatPoints ? statPoints : statPoints - 1;
-        speedIncreaseCost += 5;
-        speed = Math.max(baseSpeed - 20, 50);
+    if (statPoints >= speedIncreaseCost) {
+        speed = Math.max(50, speed - 10);
+        statPoints -= speedIncreaseCost;
+        speedIncreaseCost = Math.max(1, speedIncreaseCost - 1);
+        statPointsDisplay.textContent = `Stat Points: ${statPoints}`;
         clearInterval(intervalId);
         intervalId = setInterval(update, speed);
-        statPointsDisplay.textContent = `Stat Points: ${statPoints}`;
     }
 }
 
 function increaseSize() {
-    if (statPoints > 0 || infiniteStatPoints) {
-        statPoints = infiniteStatPoints ? statPoints : statPoints - 1;
-        sizeIncreaseCost += 5;
-        snake.push({ x: snake[0].x, y: snake[0].y });
+    if (statPoints >= sizeIncreaseCost) {
+        scale += 5;
+        statPoints -= sizeIncreaseCost;
+        sizeIncreaseCost = Math.max(1, sizeIncreaseCost - 1);
         statPointsDisplay.textContent = `Stat Points: ${statPoints}`;
     }
 }
 
 function increaseXP() {
-    if (statPoints > 0 || infiniteStatPoints) {
-        statPoints = infiniteStatPoints ? statPoints : statPoints - 1;
-        xpIncreaseCost += 5;
-        xpMultiplier += 0.1;
+    if (statPoints >= xpIncreaseCost) {
+        xp += 10;
+        statPoints -= xpIncreaseCost;
+        xpDisplay.textContent = `XP: ${xp} / ${xpRequired}`;
         statPointsDisplay.textContent = `Stat Points: ${statPoints}`;
     }
 }
 
-function toggleCheats() {
-    cheatsButtons.style.display = cheatsButtons.style.display === 'none' ? 'block' : 'none';
+function togglePause() {
+    isPaused = !isPaused;
+    pauseButton.textContent = isPaused ? 'Resume' : 'Pause';
 }
 
-function toggleCheat(cheat) {
-    switch (cheat) {
-        case 'noLosing':
-            noLosing = !noLosing;
-            break;
-        case 'infiniteStatPoints':
-            infiniteStatPoints = !infiniteStatPoints;
-            break;
-        case 'doubleScore':
-            doubleScore = !doubleScore;
-            break;
+function toggleCheats() {
+    const isHidden = cheatsButtons.style.display === 'none';
+    cheatsButtons.style.display = isHidden ? 'block' : 'none';
+    cheatsMessage.style.display = isHidden ? 'block' : 'none';
+}
+
+function toggleCheat(cheatName) {
+    if (cheatName === 'noLosing') {
+        noLosing = !noLosing;
+    } else if (cheatName === 'infiniteStatPoints') {
+        infiniteStatPoints = !infiniteStatPoints;
+        if (infiniteStatPoints) {
+            statPoints = Infinity;
+        }
+    } else if (cheatName === 'doubleScore') {
+        doubleScore = !doubleScore;
     }
-    cheatsMessage.style.display = 'block';
-    cheatsMessage.textContent = 'Using Cheats';
+    cheatsMessage.textContent = `Using Cheats: ${cheatName}`;
 }
 
 function disableAllCheats() {
     noLosing = false;
     infiniteStatPoints = false;
     doubleScore = false;
+    cheatsMessage.textContent = 'Cheats Disabled';
+    cheatsButtons.style.display = 'none';
     cheatsMessage.style.display = 'none';
-    statPoints = infiniteStatPoints ? statPoints : 0; // Reset to 0 if infiniteStatPoints is not active
-    statPointsDisplay.textContent = `Stat Points: ${statPoints}`;
+    statPoints = 0; // or a different value
+}
+
+function move(direction) {
+    if (isPaused) return;
+
+    switch (direction) {
+        case 'LEFT':
+            if (direction !== 'RIGHT') newDirection = 'LEFT';
+            break;
+        case 'UP':
+            if (direction !== 'DOWN') newDirection = 'UP';
+            break;
+        case 'RIGHT':
+            if (direction !== 'LEFT') newDirection = 'RIGHT';
+            break;
+        case 'DOWN':
+            if (direction !== 'UP') newDirection = 'DOWN';
+            break;
+    }
 }
