@@ -9,6 +9,9 @@
         #controls { margin-top: 10px; }
         #cheatsButtons { display: none; }
         #cheatsMessage { display: none; color: red; }
+        .control-button { width: 40px; height: 40px; margin: 5px; }
+        .stat-controls { display: flex; align-items: center; }
+        .stat-controls button { margin-left: 10px; }
     </style>
 </head>
 <body>
@@ -18,7 +21,7 @@
         <button id="pauseButton">Pause</button>
         <button id="increaseSpeed">Increase Speed</button>
         <button id="increaseSize">Increase Size</button>
-        <button id="increaseXP">Increase XP Gain</button>
+        <button id="increaseXP">Increase XP</button>
         <button id="cheatsButton">Cheats</button>
         <div id="cheatsButtons">
             <button id="noLosing">No Losing</button>
@@ -29,10 +32,22 @@
         <div id="cheatsMessage">Using Cheats</div>
     </div>
     <div>
-        <p id="score">Score: 0</p>
-        <p id="xp">XP: 0 / 10</p>
-        <p id="level">Level: 1</p>
-        <p id="statPoints">Stat Points: 0</p>
+        <div class="stat-controls">
+            <p id="score">Score: 0</p>
+            <button class="control-button" onclick="move('LEFT')">←</button>
+            <button class="control-button" onclick="move('UP')">↑</button>
+            <button class="control-button" onclick="move('RIGHT')">→</button>
+            <button class="control-button" onclick="move('DOWN')">↓</button>
+        </div>
+        <div class="stat-controls">
+            <p id="xp">XP: 0 / 10</p>
+        </div>
+        <div class="stat-controls">
+            <p id="level">Level: 1</p>
+        </div>
+        <div class="stat-controls">
+            <p id="statPoints">Stat Points: 0</p>
+        </div>
     </div>
     <audio id="foodSound" src="foodsound.mp3"></audio>
     <script src="snake.js"></script>
