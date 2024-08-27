@@ -5,47 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake Game</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        canvas {
-            border: 1px solid black;
-            display: block;
-            margin: 0 auto;
-        }
-        #controls {
-            margin-top: 10px;
-            text-align: center;
-        }
-        #cheatsButtons {
-            display: none;
-        }
-        #cheatsMessage {
-            display: none;
-            color: red;
-        }
-        .control-button {
-            width: 40px;
-            height: 40px;
-            margin: 5px;
-        }
-        .stat-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        .stat-controls button {
-            margin-left: 10px;
-        }
-        .dark-mode {
-            background-color: #121212;
-            color: #ffffff;
-        }
-        .dark-mode canvas {
-            border-color: #ffffff;
-        }
+        canvas { border: 1px solid black; }
+        #controls { margin-top: 10px; }
+        #cheatsButtons { display: none; }
+        #cheatsMessage { display: none; color: red; }
+        .control-button { width: 40px; height: 40px; margin: 5px; }
+        .stat-controls { display: flex; align-items: center; }
+        .stat-controls button { margin-left: 10px; }
     </style>
 </head>
 <body>
@@ -57,7 +23,6 @@
         <button id="increaseSize">Increase Size</button>
         <button id="increaseXP">Increase XP</button>
         <button id="cheatsButton">Cheats</button>
-        <button id="darkModeToggle">Dark Mode</button>
         <div id="cheatsButtons">
             <button id="noLosing">No Losing</button>
             <button id="infiniteStatPoints">Infinite Stat Points</button>
